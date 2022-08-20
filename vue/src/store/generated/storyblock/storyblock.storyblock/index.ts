@@ -1,9 +1,10 @@
 import { txClient, queryClient, MissingWalletError , registry} from './module'
 
+import { Book } from "./module/types/storyblock/book"
 import { Params } from "./module/types/storyblock/params"
 
 
-export { Params };
+export { Book, Params };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -44,6 +45,7 @@ const getDefaultState = () => {
 				Params: {},
 				
 				_Structure: {
+						Book: getStructure(Book.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
 						
 		},
@@ -135,7 +137,35 @@ export default {
 		},
 		
 		
+		async sendMsgCreateBook({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateBook(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateBook:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgCreateBook:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		
+		async MsgCreateBook({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateBook(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateBook:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgCreateBook:Create Could not create message: ' + e.message)
+				}
+			}
+		},
 		
 	}
 }

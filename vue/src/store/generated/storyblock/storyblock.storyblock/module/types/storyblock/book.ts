@@ -1,48 +1,54 @@
 /* eslint-disable */
-import { Reader, util, configure, Writer } from "protobufjs/minimal";
 import * as Long from "long";
+import { util, configure, Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "storyblock.storyblock";
 
-export interface MsgCreateBook {
+export interface Book {
   creator: string;
+  id: number;
   title: string;
   synopsis: string;
+  initId: number;
   createdAt: string;
 }
 
-export interface MsgCreateBookResponse {
-  id: number;
-}
-
-const baseMsgCreateBook: object = {
+const baseBook: object = {
   creator: "",
+  id: 0,
   title: "",
   synopsis: "",
+  initId: 0,
   createdAt: "",
 };
 
-export const MsgCreateBook = {
-  encode(message: MsgCreateBook, writer: Writer = Writer.create()): Writer {
+export const Book = {
+  encode(message: Book, writer: Writer = Writer.create()): Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
     if (message.title !== "") {
-      writer.uint32(18).string(message.title);
+      writer.uint32(26).string(message.title);
     }
     if (message.synopsis !== "") {
-      writer.uint32(26).string(message.synopsis);
+      writer.uint32(34).string(message.synopsis);
+    }
+    if (message.initId !== 0) {
+      writer.uint32(40).uint64(message.initId);
     }
     if (message.createdAt !== "") {
-      writer.uint32(34).string(message.createdAt);
+      writer.uint32(50).string(message.createdAt);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgCreateBook {
+  decode(input: Reader | Uint8Array, length?: number): Book {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgCreateBook } as MsgCreateBook;
+    const message = { ...baseBook } as Book;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -50,12 +56,18 @@ export const MsgCreateBook = {
           message.creator = reader.string();
           break;
         case 2:
-          message.title = reader.string();
+          message.id = longToNumber(reader.uint64() as Long);
           break;
         case 3:
-          message.synopsis = reader.string();
+          message.title = reader.string();
           break;
         case 4:
+          message.synopsis = reader.string();
+          break;
+        case 5:
+          message.initId = longToNumber(reader.uint64() as Long);
+          break;
+        case 6:
           message.createdAt = reader.string();
           break;
         default:
@@ -66,12 +78,17 @@ export const MsgCreateBook = {
     return message;
   },
 
-  fromJSON(object: any): MsgCreateBook {
-    const message = { ...baseMsgCreateBook } as MsgCreateBook;
+  fromJSON(object: any): Book {
+    const message = { ...baseBook } as Book;
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = String(object.creator);
     } else {
       message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
     }
     if (object.title !== undefined && object.title !== null) {
       message.title = String(object.title);
@@ -83,6 +100,11 @@ export const MsgCreateBook = {
     } else {
       message.synopsis = "";
     }
+    if (object.initId !== undefined && object.initId !== null) {
+      message.initId = Number(object.initId);
+    } else {
+      message.initId = 0;
+    }
     if (object.createdAt !== undefined && object.createdAt !== null) {
       message.createdAt = String(object.createdAt);
     } else {
@@ -91,21 +113,28 @@ export const MsgCreateBook = {
     return message;
   },
 
-  toJSON(message: MsgCreateBook): unknown {
+  toJSON(message: Book): unknown {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
     message.title !== undefined && (obj.title = message.title);
     message.synopsis !== undefined && (obj.synopsis = message.synopsis);
+    message.initId !== undefined && (obj.initId = message.initId);
     message.createdAt !== undefined && (obj.createdAt = message.createdAt);
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgCreateBook>): MsgCreateBook {
-    const message = { ...baseMsgCreateBook } as MsgCreateBook;
+  fromPartial(object: DeepPartial<Book>): Book {
+    const message = { ...baseBook } as Book;
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;
     } else {
       message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
     }
     if (object.title !== undefined && object.title !== null) {
       message.title = object.title;
@@ -117,6 +146,11 @@ export const MsgCreateBook = {
     } else {
       message.synopsis = "";
     }
+    if (object.initId !== undefined && object.initId !== null) {
+      message.initId = object.initId;
+    } else {
+      message.initId = 0;
+    }
     if (object.createdAt !== undefined && object.createdAt !== null) {
       message.createdAt = object.createdAt;
     } else {
@@ -125,98 +159,6 @@ export const MsgCreateBook = {
     return message;
   },
 };
-
-const baseMsgCreateBookResponse: object = { id: 0 };
-
-export const MsgCreateBookResponse = {
-  encode(
-    message: MsgCreateBookResponse,
-    writer: Writer = Writer.create()
-  ): Writer {
-    if (message.id !== 0) {
-      writer.uint32(8).uint64(message.id);
-    }
-    return writer;
-  },
-
-  decode(input: Reader | Uint8Array, length?: number): MsgCreateBookResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgCreateBookResponse } as MsgCreateBookResponse;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.id = longToNumber(reader.uint64() as Long);
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): MsgCreateBookResponse {
-    const message = { ...baseMsgCreateBookResponse } as MsgCreateBookResponse;
-    if (object.id !== undefined && object.id !== null) {
-      message.id = Number(object.id);
-    } else {
-      message.id = 0;
-    }
-    return message;
-  },
-
-  toJSON(message: MsgCreateBookResponse): unknown {
-    const obj: any = {};
-    message.id !== undefined && (obj.id = message.id);
-    return obj;
-  },
-
-  fromPartial(
-    object: DeepPartial<MsgCreateBookResponse>
-  ): MsgCreateBookResponse {
-    const message = { ...baseMsgCreateBookResponse } as MsgCreateBookResponse;
-    if (object.id !== undefined && object.id !== null) {
-      message.id = object.id;
-    } else {
-      message.id = 0;
-    }
-    return message;
-  },
-};
-
-/** Msg defines the Msg service. */
-export interface Msg {
-  /** this line is used by starport scaffolding # proto/tx/rpc */
-  CreateBook(request: MsgCreateBook): Promise<MsgCreateBookResponse>;
-}
-
-export class MsgClientImpl implements Msg {
-  private readonly rpc: Rpc;
-  constructor(rpc: Rpc) {
-    this.rpc = rpc;
-  }
-  CreateBook(request: MsgCreateBook): Promise<MsgCreateBookResponse> {
-    const data = MsgCreateBook.encode(request).finish();
-    const promise = this.rpc.request(
-      "storyblock.storyblock.Msg",
-      "CreateBook",
-      data
-    );
-    return promise.then((data) =>
-      MsgCreateBookResponse.decode(new Reader(data))
-    );
-  }
-}
-
-interface Rpc {
-  request(
-    service: string,
-    method: string,
-    data: Uint8Array
-  ): Promise<Uint8Array>;
-}
 
 declare var self: any | undefined;
 declare var window: any | undefined;

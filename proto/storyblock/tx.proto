@@ -7,7 +7,19 @@ option go_package = "storyblock/x/storyblock/types";
 
 // Msg defines the Msg service.
 service Msg {
-    // this line is used by starport scaffolding # proto/tx/rpc
+      rpc CreateBook(MsgCreateBook) returns (MsgCreateBookResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgCreateBook {
+  string creator = 1;
+  string title = 2;
+  string synopsis = 3;
+  string createdAt = 4;
+}
+
+message MsgCreateBookResponse {
+    uint64 id = 1;
 }
 
 // this line is used by starport scaffolding # proto/tx/message
