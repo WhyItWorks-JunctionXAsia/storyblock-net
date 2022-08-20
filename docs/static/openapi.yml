@@ -30196,6 +30196,8 @@ paths:
                     id:
                       type: string
                       format: uint64
+                    keplr:
+                      type: string
                     bookId:
                       type: string
                     title:
@@ -30296,16 +30298,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   /storyblock/storyblock/params:
@@ -30362,6 +30354,8 @@ paths:
                   id:
                     type: string
                     format: uint64
+                  keplr:
+                    type: string
                   bookId:
                     type: string
                   title:
@@ -30380,6 +30374,8 @@ paths:
                     id:
                       type: string
                       format: uint64
+                    keplr:
+                      type: string
                     storyId:
                       type: string
                     bookId:
@@ -30487,16 +30483,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -51892,6 +51878,8 @@ definitions:
       id:
         type: string
         format: uint64
+      keplr:
+        type: string
       bookId:
         type: string
       title:
@@ -51928,6 +51916,8 @@ definitions:
             id:
               type: string
               format: uint64
+            keplr:
+              type: string
             bookId:
               type: string
             title:
@@ -51979,6 +51969,8 @@ definitions:
           id:
             type: string
             format: uint64
+          keplr:
+            type: string
           bookId:
             type: string
           title:
@@ -51997,6 +51989,8 @@ definitions:
             id:
               type: string
               format: uint64
+            keplr:
+              type: string
             storyId:
               type: string
             bookId:
@@ -52044,6 +52038,8 @@ definitions:
       id:
         type: string
         format: uint64
+      keplr:
+        type: string
       storyId:
         type: string
       bookId:

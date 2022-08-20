@@ -14,10 +14,11 @@ service Msg {
 
 message MsgCreateBook {
   string creator = 1;
-  string bookId = 2;
-  string title = 3;
-  string synopsis = 4;
-  string createdAt = 5;
+  string keplr = 2;
+  string bookId = 3;
+  string title = 4;
+  string synopsis = 5;
+  string createdAt = 6;
 }
 
 message MsgCreateBookResponse {
@@ -26,13 +27,14 @@ message MsgCreateBookResponse {
 
 message MsgCreateStory {
   string creator = 1;
-  string storyId = 2;
-  string bookId = 3;
-  string prevStoryId = 4;
-  string height = 5;
-  string title = 6;
-  string body = 7;
-  string createdAt = 8;
+  string keplr = 2;
+  string storyId = 3;
+  string bookId = 4;
+  string prevStoryId = 5;
+  string height = 6;
+  string title = 7;
+  string body = 8;
+  string createdAt = 9;
 }
 
 message MsgCreateStoryResponse {

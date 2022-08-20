@@ -12,6 +12,7 @@ func (k msgServer) CreateBook(goCtx context.Context, msg *types.MsgCreateBook) (
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	var book = types.Book{
 		Creator:   msg.Creator,
+		Keplr:     msg.Keplr,
 		BookId:    msg.BookId,
 		Title:     msg.Title,
 		Synopsis:  msg.Synopsis,

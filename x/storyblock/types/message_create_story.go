@@ -9,9 +9,10 @@ const TypeMsgCreateStory = "create_story"
 
 var _ sdk.Msg = &MsgCreateStory{}
 
-func NewMsgCreateStory(creator string, storyId string, bookId string, prevStoryId string, height string, title string, body string, createdAt string) *MsgCreateStory {
+func NewMsgCreateStory(creator string, keplr string, storyId string, bookId string, prevStoryId string, height string, title string, body string, createdAt string) *MsgCreateStory {
 	return &MsgCreateStory{
 		Creator:     creator,
+		Keplr:       keplr,
 		StoryId:     storyId,
 		BookId:      bookId,
 		PrevStoryId: prevStoryId,

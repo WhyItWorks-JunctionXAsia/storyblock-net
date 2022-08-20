@@ -7,6 +7,7 @@ export const protobufPackage = "storyblock.storyblock";
 export interface Story {
   creator: string;
   id: number;
+  keplr: string;
   storyId: string;
   bookId: string;
   prevStoryId: string;
@@ -19,6 +20,7 @@ export interface Story {
 const baseStory: object = {
   creator: "",
   id: 0,
+  keplr: "",
   storyId: "",
   bookId: "",
   prevStoryId: "",
@@ -36,26 +38,29 @@ export const Story = {
     if (message.id !== 0) {
       writer.uint32(16).uint64(message.id);
     }
+    if (message.keplr !== "") {
+      writer.uint32(26).string(message.keplr);
+    }
     if (message.storyId !== "") {
-      writer.uint32(26).string(message.storyId);
+      writer.uint32(34).string(message.storyId);
     }
     if (message.bookId !== "") {
-      writer.uint32(34).string(message.bookId);
+      writer.uint32(42).string(message.bookId);
     }
     if (message.prevStoryId !== "") {
-      writer.uint32(42).string(message.prevStoryId);
+      writer.uint32(50).string(message.prevStoryId);
     }
     if (message.height !== "") {
-      writer.uint32(50).string(message.height);
+      writer.uint32(58).string(message.height);
     }
     if (message.title !== "") {
-      writer.uint32(58).string(message.title);
+      writer.uint32(66).string(message.title);
     }
     if (message.body !== "") {
-      writer.uint32(66).string(message.body);
+      writer.uint32(74).string(message.body);
     }
     if (message.createdAt !== "") {
-      writer.uint32(74).string(message.createdAt);
+      writer.uint32(82).string(message.createdAt);
     }
     return writer;
   },
@@ -74,24 +79,27 @@ export const Story = {
           message.id = longToNumber(reader.uint64() as Long);
           break;
         case 3:
-          message.storyId = reader.string();
+          message.keplr = reader.string();
           break;
         case 4:
-          message.bookId = reader.string();
+          message.storyId = reader.string();
           break;
         case 5:
-          message.prevStoryId = reader.string();
+          message.bookId = reader.string();
           break;
         case 6:
-          message.height = reader.string();
+          message.prevStoryId = reader.string();
           break;
         case 7:
-          message.title = reader.string();
+          message.height = reader.string();
           break;
         case 8:
-          message.body = reader.string();
+          message.title = reader.string();
           break;
         case 9:
+          message.body = reader.string();
+          break;
+        case 10:
           message.createdAt = reader.string();
           break;
         default:
@@ -113,6 +121,11 @@ export const Story = {
       message.id = Number(object.id);
     } else {
       message.id = 0;
+    }
+    if (object.keplr !== undefined && object.keplr !== null) {
+      message.keplr = String(object.keplr);
+    } else {
+      message.keplr = "";
     }
     if (object.storyId !== undefined && object.storyId !== null) {
       message.storyId = String(object.storyId);
@@ -156,6 +169,7 @@ export const Story = {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.id !== undefined && (obj.id = message.id);
+    message.keplr !== undefined && (obj.keplr = message.keplr);
     message.storyId !== undefined && (obj.storyId = message.storyId);
     message.bookId !== undefined && (obj.bookId = message.bookId);
     message.prevStoryId !== undefined &&
@@ -178,6 +192,11 @@ export const Story = {
       message.id = object.id;
     } else {
       message.id = 0;
+    }
+    if (object.keplr !== undefined && object.keplr !== null) {
+      message.keplr = object.keplr;
+    } else {
+      message.keplr = "";
     }
     if (object.storyId !== undefined && object.storyId !== null) {
       message.storyId = object.storyId;

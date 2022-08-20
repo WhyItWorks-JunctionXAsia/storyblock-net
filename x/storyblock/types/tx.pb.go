@@ -29,10 +29,11 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type MsgCreateBook struct {
 	Creator   string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
-	BookId    string `protobuf:"bytes,2,opt,name=bookId,proto3" json:"bookId,omitempty"`
-	Title     string `protobuf:"bytes,3,opt,name=title,proto3" json:"title,omitempty"`
-	Synopsis  string `protobuf:"bytes,4,opt,name=synopsis,proto3" json:"synopsis,omitempty"`
-	CreatedAt string `protobuf:"bytes,5,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
+	Keplr     string `protobuf:"bytes,2,opt,name=keplr,proto3" json:"keplr,omitempty"`
+	BookId    string `protobuf:"bytes,3,opt,name=bookId,proto3" json:"bookId,omitempty"`
+	Title     string `protobuf:"bytes,4,opt,name=title,proto3" json:"title,omitempty"`
+	Synopsis  string `protobuf:"bytes,5,opt,name=synopsis,proto3" json:"synopsis,omitempty"`
+	CreatedAt string `protobuf:"bytes,6,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
 }
 
 func (m *MsgCreateBook) Reset()         { *m = MsgCreateBook{} }
@@ -71,6 +72,13 @@ var xxx_messageInfo_MsgCreateBook proto.InternalMessageInfo
 func (m *MsgCreateBook) GetCreator() string {
 	if m != nil {
 		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgCreateBook) GetKeplr() string {
+	if m != nil {
+		return m.Keplr
 	}
 	return ""
 }
@@ -149,13 +157,14 @@ func (m *MsgCreateBookResponse) GetId() uint64 {
 
 type MsgCreateStory struct {
 	Creator     string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
-	StoryId     string `protobuf:"bytes,2,opt,name=storyId,proto3" json:"storyId,omitempty"`
-	BookId      string `protobuf:"bytes,3,opt,name=bookId,proto3" json:"bookId,omitempty"`
-	PrevStoryId string `protobuf:"bytes,4,opt,name=prevStoryId,proto3" json:"prevStoryId,omitempty"`
-	Height      string `protobuf:"bytes,5,opt,name=height,proto3" json:"height,omitempty"`
-	Title       string `protobuf:"bytes,6,opt,name=title,proto3" json:"title,omitempty"`
-	Body        string `protobuf:"bytes,7,opt,name=body,proto3" json:"body,omitempty"`
-	CreatedAt   string `protobuf:"bytes,8,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
+	Keplr       string `protobuf:"bytes,2,opt,name=keplr,proto3" json:"keplr,omitempty"`
+	StoryId     string `protobuf:"bytes,3,opt,name=storyId,proto3" json:"storyId,omitempty"`
+	BookId      string `protobuf:"bytes,4,opt,name=bookId,proto3" json:"bookId,omitempty"`
+	PrevStoryId string `protobuf:"bytes,5,opt,name=prevStoryId,proto3" json:"prevStoryId,omitempty"`
+	Height      string `protobuf:"bytes,6,opt,name=height,proto3" json:"height,omitempty"`
+	Title       string `protobuf:"bytes,7,opt,name=title,proto3" json:"title,omitempty"`
+	Body        string `protobuf:"bytes,8,opt,name=body,proto3" json:"body,omitempty"`
+	CreatedAt   string `protobuf:"bytes,9,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
 }
 
 func (m *MsgCreateStory) Reset()         { *m = MsgCreateStory{} }
@@ -194,6 +203,13 @@ var xxx_messageInfo_MsgCreateStory proto.InternalMessageInfo
 func (m *MsgCreateStory) GetCreator() string {
 	if m != nil {
 		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgCreateStory) GetKeplr() string {
+	if m != nil {
+		return m.Keplr
 	}
 	return ""
 }
@@ -301,30 +317,31 @@ func init() {
 func init() { proto.RegisterFile("storyblock/tx.proto", fileDescriptor_2bfbf272a6fe99e5) }
 
 var fileDescriptor_2bfbf272a6fe99e5 = []byte{
-	// 364 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x52, 0x4f, 0x4f, 0xfa, 0x40,
-	0x10, 0x65, 0xf9, 0x57, 0x18, 0xf2, 0xe3, 0xb0, 0x3f, 0x21, 0x1b, 0xa2, 0x0d, 0x21, 0x1a, 0x3d,
-	0x68, 0x49, 0xf0, 0xe0, 0x59, 0x38, 0x79, 0xe0, 0x52, 0x6e, 0x9e, 0xb4, 0x74, 0x03, 0x0d, 0x84,
-	0x69, 0x76, 0x37, 0x86, 0x7e, 0x0b, 0xfd, 0x56, 0x1e, 0x3c, 0x70, 0xf4, 0x64, 0x0c, 0x7c, 0x11,
-	0xc3, 0x42, 0xdb, 0xad, 0x31, 0xca, 0x6d, 0xdf, 0x9b, 0x99, 0xf6, 0xbd, 0x37, 0x03, 0xff, 0xa5,
-	0x42, 0x11, 0x79, 0x73, 0x1c, 0xcf, 0xba, 0x6a, 0xe9, 0x84, 0x02, 0x15, 0xd2, 0x46, 0x4a, 0x3a,
-	0xe9, 0xb3, 0xf3, 0x42, 0xe0, 0xdf, 0x50, 0x4e, 0x06, 0x82, 0x3f, 0x2a, 0xde, 0x47, 0x9c, 0x51,
-	0x06, 0xd6, 0x78, 0x8b, 0x50, 0x30, 0xd2, 0x26, 0x17, 0x55, 0x37, 0x86, 0xb4, 0x09, 0x65, 0x0f,
-	0x71, 0x76, 0xe7, 0xb3, 0xbc, 0x2e, 0xec, 0x11, 0x3d, 0x82, 0x92, 0x0a, 0xd4, 0x9c, 0xb3, 0x82,
-	0xa6, 0x77, 0x80, 0xb6, 0xa0, 0x22, 0xa3, 0x05, 0x86, 0x32, 0x90, 0xac, 0xa8, 0x0b, 0x09, 0xa6,
-	0xc7, 0x50, 0xd5, 0x1f, 0xe5, 0xfe, 0xad, 0x62, 0x25, 0x5d, 0x4c, 0x89, 0xce, 0x39, 0x34, 0x32,
-	0x92, 0x5c, 0x2e, 0x43, 0x5c, 0x48, 0x4e, 0xeb, 0x90, 0x0f, 0x7c, 0xad, 0xaa, 0xe8, 0xe6, 0x03,
-	0xbf, 0xf3, 0x41, 0xa0, 0x9e, 0x74, 0x8e, 0xb6, 0xa6, 0x7e, 0x51, 0xcf, 0xc0, 0xd2, 0xbe, 0x13,
-	0xf9, 0x31, 0x34, 0x7c, 0x15, 0x32, 0xbe, 0xda, 0x50, 0x0b, 0x05, 0x7f, 0x1a, 0xed, 0xa7, 0x76,
-	0x26, 0x4c, 0x6a, 0x3b, 0x39, 0xe5, 0xc1, 0x64, 0x1a, 0x9b, 0xd8, 0xa3, 0x34, 0x91, 0xb2, 0x99,
-	0x08, 0x85, 0xa2, 0x87, 0x7e, 0xc4, 0x2c, 0x4d, 0xea, 0x77, 0x36, 0x89, 0xca, 0xf7, 0x24, 0x7a,
-	0xd0, 0xcc, 0xfa, 0x4b, 0xa2, 0x60, 0x60, 0x09, 0xae, 0x06, 0xe8, 0x73, 0xed, 0xb3, 0xe4, 0xc6,
-	0xb0, 0xf7, 0x46, 0xa0, 0x30, 0x94, 0x13, 0xfa, 0x00, 0x60, 0x6c, 0xf5, 0xd4, 0xf9, 0x71, 0xff,
-	0x4e, 0x26, 0xe8, 0xd6, 0xe5, 0x21, 0x5d, 0x89, 0x86, 0x31, 0xd4, 0xcc, 0xe8, 0xcf, 0xfe, 0x1a,
-	0xd6, 0x6d, 0xad, 0xab, 0x83, 0xda, 0xe2, 0x9f, 0xf4, 0x6f, 0x5e, 0xd7, 0x36, 0x59, 0xad, 0x6d,
-	0xf2, 0xb9, 0xb6, 0xc9, 0xf3, 0xc6, 0xce, 0xad, 0x36, 0x76, 0xee, 0x7d, 0x63, 0xe7, 0xee, 0x4f,
-	0x8c, 0x33, 0x5f, 0x76, 0xcd, 0x9b, 0x8f, 0x42, 0x2e, 0xbd, 0xb2, 0xbe, 0xfb, 0xeb, 0xaf, 0x00,
-	0x00, 0x00, 0xff, 0xff, 0xb0, 0xd7, 0x7d, 0xce, 0x0e, 0x03, 0x00, 0x00,
+	// 378 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x53, 0xbd, 0x4e, 0x32, 0x41,
+	0x14, 0x65, 0x60, 0x61, 0xe1, 0x92, 0x8f, 0x62, 0x3e, 0x21, 0x13, 0xa2, 0x1b, 0x42, 0x34, 0x5a,
+	0xe8, 0x92, 0x60, 0x61, 0x2d, 0x54, 0x16, 0x34, 0x4b, 0x67, 0xa5, 0xcb, 0x4e, 0x60, 0xb3, 0x84,
+	0xd9, 0xcc, 0x4c, 0x0c, 0xfb, 0x16, 0xbe, 0x85, 0xaf, 0x62, 0x61, 0x41, 0x69, 0x69, 0xe0, 0x15,
+	0x7c, 0x00, 0xb3, 0xc3, 0xfe, 0xcc, 0x1a, 0x13, 0xb1, 0x9b, 0x73, 0xe6, 0xdc, 0xcc, 0x3d, 0x67,
+	0xee, 0x85, 0xff, 0x42, 0x32, 0x1e, 0xb9, 0x4b, 0x36, 0x0b, 0x06, 0x72, 0x6d, 0x87, 0x9c, 0x49,
+	0x86, 0xdb, 0x39, 0x69, 0xe7, 0xc7, 0xfe, 0x0b, 0x82, 0x7f, 0x13, 0x31, 0x1f, 0x73, 0xfa, 0x28,
+	0xe9, 0x88, 0xb1, 0x00, 0x13, 0x30, 0x67, 0x31, 0x62, 0x9c, 0xa0, 0x1e, 0xba, 0x68, 0x38, 0x29,
+	0xc4, 0x47, 0x50, 0x0d, 0x68, 0xb8, 0xe4, 0xa4, 0xac, 0xf8, 0x3d, 0xc0, 0x1d, 0xa8, 0xb9, 0x8c,
+	0x05, 0x77, 0x1e, 0xa9, 0x28, 0x3a, 0x41, 0xb1, 0x5a, 0xfa, 0x72, 0x49, 0x89, 0xb1, 0x57, 0x2b,
+	0x80, 0xbb, 0x50, 0x17, 0xd1, 0x8a, 0x85, 0xc2, 0x17, 0xa4, 0xaa, 0x2e, 0x32, 0x8c, 0x8f, 0xa1,
+	0xa1, 0x9e, 0xa2, 0xde, 0xad, 0x24, 0x35, 0x75, 0x99, 0x13, 0xfd, 0x73, 0x68, 0x17, 0x1a, 0x75,
+	0xa8, 0x08, 0xd9, 0x4a, 0x50, 0xdc, 0x82, 0xb2, 0xef, 0xa9, 0x5e, 0x0d, 0xa7, 0xec, 0x7b, 0xfd,
+	0x4f, 0x04, 0xad, 0x4c, 0x39, 0x8d, 0xad, 0xfe, 0xd9, 0x13, 0x01, 0x53, 0x65, 0x94, 0x99, 0x4a,
+	0xa1, 0xe6, 0xd6, 0x28, 0xb8, 0xed, 0x41, 0x33, 0xe4, 0xf4, 0x69, 0x9a, 0x54, 0xed, 0xad, 0xe9,
+	0x54, 0x5c, 0xb9, 0xa0, 0xfe, 0x7c, 0x91, 0x5a, 0x4b, 0x50, 0x9e, 0x93, 0xa9, 0xe7, 0x84, 0xc1,
+	0x70, 0x99, 0x17, 0x91, 0xba, 0x22, 0xd5, 0xb9, 0x98, 0x4f, 0xe3, 0x7b, 0x3e, 0x43, 0xe8, 0x14,
+	0x5d, 0x67, 0x01, 0x11, 0x30, 0x39, 0x95, 0x63, 0xe6, 0x51, 0xe5, 0xbe, 0xea, 0xa4, 0x70, 0xf8,
+	0x86, 0xa0, 0x32, 0x11, 0x73, 0xfc, 0x00, 0xa0, 0x4d, 0xc0, 0xa9, 0xfd, 0xe3, 0xac, 0xd8, 0x85,
+	0xf8, 0xbb, 0x97, 0x87, 0xa8, 0xb2, 0x1e, 0x66, 0xd0, 0xd4, 0x3f, 0xe4, 0xec, 0xb7, 0x62, 0x25,
+	0xeb, 0x5e, 0x1d, 0x24, 0x4b, 0x1f, 0x19, 0xdd, 0xbc, 0x6e, 0x2d, 0xb4, 0xd9, 0x5a, 0xe8, 0x63,
+	0x6b, 0xa1, 0xe7, 0x9d, 0x55, 0xda, 0xec, 0xac, 0xd2, 0xfb, 0xce, 0x2a, 0xdd, 0x9f, 0x68, 0x2b,
+	0xb1, 0x1e, 0xe8, 0xfb, 0x11, 0x85, 0x54, 0xb8, 0x35, 0xb5, 0x23, 0xd7, 0x5f, 0x01, 0x00, 0x00,
+	0xff, 0xff, 0x6c, 0x7b, 0xcf, 0x26, 0x3a, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -468,26 +485,33 @@ func (m *MsgCreateBook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.CreatedAt)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.CreatedAt)))
 		i--
-		dAtA[i] = 0x2a
+		dAtA[i] = 0x32
 	}
 	if len(m.Synopsis) > 0 {
 		i -= len(m.Synopsis)
 		copy(dAtA[i:], m.Synopsis)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.Synopsis)))
 		i--
-		dAtA[i] = 0x22
+		dAtA[i] = 0x2a
 	}
 	if len(m.Title) > 0 {
 		i -= len(m.Title)
 		copy(dAtA[i:], m.Title)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.Title)))
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x22
 	}
 	if len(m.BookId) > 0 {
 		i -= len(m.BookId)
 		copy(dAtA[i:], m.BookId)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.BookId)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Keplr) > 0 {
+		i -= len(m.Keplr)
+		copy(dAtA[i:], m.Keplr)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Keplr)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -554,47 +578,54 @@ func (m *MsgCreateStory) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.CreatedAt)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.CreatedAt)))
 		i--
-		dAtA[i] = 0x42
+		dAtA[i] = 0x4a
 	}
 	if len(m.Body) > 0 {
 		i -= len(m.Body)
 		copy(dAtA[i:], m.Body)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.Body)))
 		i--
-		dAtA[i] = 0x3a
+		dAtA[i] = 0x42
 	}
 	if len(m.Title) > 0 {
 		i -= len(m.Title)
 		copy(dAtA[i:], m.Title)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.Title)))
 		i--
-		dAtA[i] = 0x32
+		dAtA[i] = 0x3a
 	}
 	if len(m.Height) > 0 {
 		i -= len(m.Height)
 		copy(dAtA[i:], m.Height)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.Height)))
 		i--
-		dAtA[i] = 0x2a
+		dAtA[i] = 0x32
 	}
 	if len(m.PrevStoryId) > 0 {
 		i -= len(m.PrevStoryId)
 		copy(dAtA[i:], m.PrevStoryId)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.PrevStoryId)))
 		i--
-		dAtA[i] = 0x22
+		dAtA[i] = 0x2a
 	}
 	if len(m.BookId) > 0 {
 		i -= len(m.BookId)
 		copy(dAtA[i:], m.BookId)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.BookId)))
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x22
 	}
 	if len(m.StoryId) > 0 {
 		i -= len(m.StoryId)
 		copy(dAtA[i:], m.StoryId)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.StoryId)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Keplr) > 0 {
+		i -= len(m.Keplr)
+		copy(dAtA[i:], m.Keplr)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Keplr)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -657,6 +688,10 @@ func (m *MsgCreateBook) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
+	l = len(m.Keplr)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
 	l = len(m.BookId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
@@ -695,6 +730,10 @@ func (m *MsgCreateStory) Size() (n int) {
 	var l int
 	_ = l
 	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Keplr)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -810,6 +849,38 @@ func (m *MsgCreateBook) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Keplr", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Keplr = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field BookId", wireType)
 			}
 			var stringLen uint64
@@ -840,7 +911,7 @@ func (m *MsgCreateBook) Unmarshal(dAtA []byte) error {
 			}
 			m.BookId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 3:
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Title", wireType)
 			}
@@ -872,7 +943,7 @@ func (m *MsgCreateBook) Unmarshal(dAtA []byte) error {
 			}
 			m.Title = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 4:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Synopsis", wireType)
 			}
@@ -904,7 +975,7 @@ func (m *MsgCreateBook) Unmarshal(dAtA []byte) error {
 			}
 			m.Synopsis = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 5:
+		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
 			}
@@ -1089,6 +1160,38 @@ func (m *MsgCreateStory) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Keplr", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Keplr = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field StoryId", wireType)
 			}
 			var stringLen uint64
@@ -1119,7 +1222,7 @@ func (m *MsgCreateStory) Unmarshal(dAtA []byte) error {
 			}
 			m.StoryId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 3:
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field BookId", wireType)
 			}
@@ -1151,7 +1254,7 @@ func (m *MsgCreateStory) Unmarshal(dAtA []byte) error {
 			}
 			m.BookId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 4:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field PrevStoryId", wireType)
 			}
@@ -1183,7 +1286,7 @@ func (m *MsgCreateStory) Unmarshal(dAtA []byte) error {
 			}
 			m.PrevStoryId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 5:
+		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Height", wireType)
 			}
@@ -1215,7 +1318,7 @@ func (m *MsgCreateStory) Unmarshal(dAtA []byte) error {
 			}
 			m.Height = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 6:
+		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Title", wireType)
 			}
@@ -1247,7 +1350,7 @@ func (m *MsgCreateStory) Unmarshal(dAtA []byte) error {
 			}
 			m.Title = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 7:
+		case 8:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Body", wireType)
 			}
@@ -1279,7 +1382,7 @@ func (m *MsgCreateStory) Unmarshal(dAtA []byte) error {
 			}
 			m.Body = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 8:
+		case 9:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
 			}

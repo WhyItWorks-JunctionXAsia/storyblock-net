@@ -3,11 +3,12 @@ package cli
 import (
 	"strconv"
 
+	"storyblock/x/storyblock/types"
+
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	"github.com/spf13/cobra"
-	"storyblock/x/storyblock/types"
 )
 
 var _ = strconv.Itoa(0)
@@ -16,12 +17,13 @@ func CmdCreateBook() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "create-book [book-id] [title] [synopsis] [created-at]",
 		Short: "Broadcast message createBook",
-		Args:  cobra.ExactArgs(4),
+		Args:  cobra.ExactArgs(5),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
-			argBookId := args[0]
-			argTitle := args[1]
-			argSynopsis := args[2]
-			argCreatedAt := args[3]
+			argKeplr := args[0]
+			argBookId := args[1]
+			argTitle := args[2]
+			argSynopsis := args[3]
+			argCreatedAt := args[4]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -30,6 +32,7 @@ func CmdCreateBook() *cobra.Command {
 
 			msg := types.NewMsgCreateBook(
 				clientCtx.GetFromAddress().String(),
+				argKeplr,
 				argBookId,
 				argTitle,
 				argSynopsis,

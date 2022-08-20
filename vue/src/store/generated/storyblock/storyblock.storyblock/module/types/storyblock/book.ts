@@ -7,6 +7,7 @@ export const protobufPackage = "storyblock.storyblock";
 export interface Book {
   creator: string;
   id: number;
+  keplr: string;
   bookId: string;
   title: string;
   synopsis: string;
@@ -16,6 +17,7 @@ export interface Book {
 const baseBook: object = {
   creator: "",
   id: 0,
+  keplr: "",
   bookId: "",
   title: "",
   synopsis: "",
@@ -30,17 +32,20 @@ export const Book = {
     if (message.id !== 0) {
       writer.uint32(16).uint64(message.id);
     }
+    if (message.keplr !== "") {
+      writer.uint32(26).string(message.keplr);
+    }
     if (message.bookId !== "") {
-      writer.uint32(26).string(message.bookId);
+      writer.uint32(34).string(message.bookId);
     }
     if (message.title !== "") {
-      writer.uint32(34).string(message.title);
+      writer.uint32(42).string(message.title);
     }
     if (message.synopsis !== "") {
-      writer.uint32(42).string(message.synopsis);
+      writer.uint32(50).string(message.synopsis);
     }
     if (message.createdAt !== "") {
-      writer.uint32(50).string(message.createdAt);
+      writer.uint32(58).string(message.createdAt);
     }
     return writer;
   },
@@ -59,15 +64,18 @@ export const Book = {
           message.id = longToNumber(reader.uint64() as Long);
           break;
         case 3:
-          message.bookId = reader.string();
+          message.keplr = reader.string();
           break;
         case 4:
-          message.title = reader.string();
+          message.bookId = reader.string();
           break;
         case 5:
-          message.synopsis = reader.string();
+          message.title = reader.string();
           break;
         case 6:
+          message.synopsis = reader.string();
+          break;
+        case 7:
           message.createdAt = reader.string();
           break;
         default:
@@ -89,6 +97,11 @@ export const Book = {
       message.id = Number(object.id);
     } else {
       message.id = 0;
+    }
+    if (object.keplr !== undefined && object.keplr !== null) {
+      message.keplr = String(object.keplr);
+    } else {
+      message.keplr = "";
     }
     if (object.bookId !== undefined && object.bookId !== null) {
       message.bookId = String(object.bookId);
@@ -117,6 +130,7 @@ export const Book = {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.id !== undefined && (obj.id = message.id);
+    message.keplr !== undefined && (obj.keplr = message.keplr);
     message.bookId !== undefined && (obj.bookId = message.bookId);
     message.title !== undefined && (obj.title = message.title);
     message.synopsis !== undefined && (obj.synopsis = message.synopsis);
@@ -135,6 +149,11 @@ export const Book = {
       message.id = object.id;
     } else {
       message.id = 0;
+    }
+    if (object.keplr !== undefined && object.keplr !== null) {
+      message.keplr = object.keplr;
+    } else {
+      message.keplr = "";
     }
     if (object.bookId !== undefined && object.bookId !== null) {
       message.bookId = object.bookId;

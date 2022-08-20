@@ -7,11 +7,12 @@ option go_package = "storyblock/x/storyblock/types";
 message Story{
     string creator = 1;
     uint64 id = 2;
-    string storyId = 3;
-    string bookId = 4;
-    string prevStoryId = 5;
-    string height = 6;
-    string title = 7;
-    string body = 8;
-    string createdAt = 9;
+    string keplr = 3;
+    string storyId = 4;
+    string bookId = 5;
+    string prevStoryId = 6;
+    string height = 7;
+    string title = 8;
+    string body = 9;
+    string createdAt = 10;
 }

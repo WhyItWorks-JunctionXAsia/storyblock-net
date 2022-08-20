@@ -6,6 +6,7 @@ export const protobufPackage = "storyblock.storyblock";
 
 export interface MsgCreateBook {
   creator: string;
+  keplr: string;
   bookId: string;
   title: string;
   synopsis: string;
@@ -18,6 +19,7 @@ export interface MsgCreateBookResponse {
 
 export interface MsgCreateStory {
   creator: string;
+  keplr: string;
   storyId: string;
   bookId: string;
   prevStoryId: string;
@@ -33,6 +35,7 @@ export interface MsgCreateStoryResponse {
 
 const baseMsgCreateBook: object = {
   creator: "",
+  keplr: "",
   bookId: "",
   title: "",
   synopsis: "",
@@ -44,17 +47,20 @@ export const MsgCreateBook = {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
+    if (message.keplr !== "") {
+      writer.uint32(18).string(message.keplr);
+    }
     if (message.bookId !== "") {
-      writer.uint32(18).string(message.bookId);
+      writer.uint32(26).string(message.bookId);
     }
     if (message.title !== "") {
-      writer.uint32(26).string(message.title);
+      writer.uint32(34).string(message.title);
     }
     if (message.synopsis !== "") {
-      writer.uint32(34).string(message.synopsis);
+      writer.uint32(42).string(message.synopsis);
     }
     if (message.createdAt !== "") {
-      writer.uint32(42).string(message.createdAt);
+      writer.uint32(50).string(message.createdAt);
     }
     return writer;
   },
@@ -70,15 +76,18 @@ export const MsgCreateBook = {
           message.creator = reader.string();
           break;
         case 2:
-          message.bookId = reader.string();
+          message.keplr = reader.string();
           break;
         case 3:
-          message.title = reader.string();
+          message.bookId = reader.string();
           break;
         case 4:
-          message.synopsis = reader.string();
+          message.title = reader.string();
           break;
         case 5:
+          message.synopsis = reader.string();
+          break;
+        case 6:
           message.createdAt = reader.string();
           break;
         default:
@@ -95,6 +104,11 @@ export const MsgCreateBook = {
       message.creator = String(object.creator);
     } else {
       message.creator = "";
+    }
+    if (object.keplr !== undefined && object.keplr !== null) {
+      message.keplr = String(object.keplr);
+    } else {
+      message.keplr = "";
     }
     if (object.bookId !== undefined && object.bookId !== null) {
       message.bookId = String(object.bookId);
@@ -122,6 +136,7 @@ export const MsgCreateBook = {
   toJSON(message: MsgCreateBook): unknown {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
+    message.keplr !== undefined && (obj.keplr = message.keplr);
     message.bookId !== undefined && (obj.bookId = message.bookId);
     message.title !== undefined && (obj.title = message.title);
     message.synopsis !== undefined && (obj.synopsis = message.synopsis);
@@ -135,6 +150,11 @@ export const MsgCreateBook = {
       message.creator = object.creator;
     } else {
       message.creator = "";
+    }
+    if (object.keplr !== undefined && object.keplr !== null) {
+      message.keplr = object.keplr;
+    } else {
+      message.keplr = "";
     }
     if (object.bookId !== undefined && object.bookId !== null) {
       message.bookId = object.bookId;
@@ -222,6 +242,7 @@ export const MsgCreateBookResponse = {
 
 const baseMsgCreateStory: object = {
   creator: "",
+  keplr: "",
   storyId: "",
   bookId: "",
   prevStoryId: "",
@@ -236,26 +257,29 @@ export const MsgCreateStory = {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
+    if (message.keplr !== "") {
+      writer.uint32(18).string(message.keplr);
+    }
     if (message.storyId !== "") {
-      writer.uint32(18).string(message.storyId);
+      writer.uint32(26).string(message.storyId);
     }
     if (message.bookId !== "") {
-      writer.uint32(26).string(message.bookId);
+      writer.uint32(34).string(message.bookId);
     }
     if (message.prevStoryId !== "") {
-      writer.uint32(34).string(message.prevStoryId);
+      writer.uint32(42).string(message.prevStoryId);
     }
     if (message.height !== "") {
-      writer.uint32(42).string(message.height);
+      writer.uint32(50).string(message.height);
     }
     if (message.title !== "") {
-      writer.uint32(50).string(message.title);
+      writer.uint32(58).string(message.title);
     }
     if (message.body !== "") {
-      writer.uint32(58).string(message.body);
+      writer.uint32(66).string(message.body);
     }
     if (message.createdAt !== "") {
-      writer.uint32(66).string(message.createdAt);
+      writer.uint32(74).string(message.createdAt);
     }
     return writer;
   },
@@ -271,24 +295,27 @@ export const MsgCreateStory = {
           message.creator = reader.string();
           break;
         case 2:
-          message.storyId = reader.string();
+          message.keplr = reader.string();
           break;
         case 3:
-          message.bookId = reader.string();
+          message.storyId = reader.string();
           break;
         case 4:
-          message.prevStoryId = reader.string();
+          message.bookId = reader.string();
           break;
         case 5:
-          message.height = reader.string();
+          message.prevStoryId = reader.string();
           break;
         case 6:
-          message.title = reader.string();
+          message.height = reader.string();
           break;
         case 7:
-          message.body = reader.string();
+          message.title = reader.string();
           break;
         case 8:
+          message.body = reader.string();
+          break;
+        case 9:
           message.createdAt = reader.string();
           break;
         default:
@@ -305,6 +332,11 @@ export const MsgCreateStory = {
       message.creator = String(object.creator);
     } else {
       message.creator = "";
+    }
+    if (object.keplr !== undefined && object.keplr !== null) {
+      message.keplr = String(object.keplr);
+    } else {
+      message.keplr = "";
     }
     if (object.storyId !== undefined && object.storyId !== null) {
       message.storyId = String(object.storyId);
@@ -347,6 +379,7 @@ export const MsgCreateStory = {
   toJSON(message: MsgCreateStory): unknown {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
+    message.keplr !== undefined && (obj.keplr = message.keplr);
     message.storyId !== undefined && (obj.storyId = message.storyId);
     message.bookId !== undefined && (obj.bookId = message.bookId);
     message.prevStoryId !== undefined &&
@@ -364,6 +397,11 @@ export const MsgCreateStory = {
       message.creator = object.creator;
     } else {
       message.creator = "";
+    }
+    if (object.keplr !== undefined && object.keplr !== null) {
+      message.keplr = object.keplr;
+    } else {
+      message.keplr = "";
     }
     if (object.storyId !== undefined && object.storyId !== null) {
       message.storyId = object.storyId;

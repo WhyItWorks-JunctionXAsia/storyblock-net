@@ -7,8 +7,9 @@ option go_package = "storyblock/x/storyblock/types";
 message Book{
     string creator = 1;
     uint64 id = 2;
-    string bookId = 3;
-    string title = 4;
-    string synopsis = 5;
-    string createdAt = 6;
+    string keplr =3;
+    string bookId = 4;
+    string title = 5;
+    string synopsis = 6;
+    string createdAt = 7;
 }
