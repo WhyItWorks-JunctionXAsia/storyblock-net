@@ -33,6 +33,14 @@ export interface MsgCreateStoryResponse {
   retCode: number;
 }
 
+export interface MsgDoVote {
+  creator: string;
+  keplr: string;
+  storyId: string;
+}
+
+export interface MsgDoVoteResponse {}
+
 const baseMsgCreateBook: object = {
   creator: "",
   keplr: "",
@@ -502,11 +510,139 @@ export const MsgCreateStoryResponse = {
   },
 };
 
+const baseMsgDoVote: object = { creator: "", keplr: "", storyId: "" };
+
+export const MsgDoVote = {
+  encode(message: MsgDoVote, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.keplr !== "") {
+      writer.uint32(18).string(message.keplr);
+    }
+    if (message.storyId !== "") {
+      writer.uint32(26).string(message.storyId);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgDoVote {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgDoVote } as MsgDoVote;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.keplr = reader.string();
+          break;
+        case 3:
+          message.storyId = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgDoVote {
+    const message = { ...baseMsgDoVote } as MsgDoVote;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.keplr !== undefined && object.keplr !== null) {
+      message.keplr = String(object.keplr);
+    } else {
+      message.keplr = "";
+    }
+    if (object.storyId !== undefined && object.storyId !== null) {
+      message.storyId = String(object.storyId);
+    } else {
+      message.storyId = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgDoVote): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.keplr !== undefined && (obj.keplr = message.keplr);
+    message.storyId !== undefined && (obj.storyId = message.storyId);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgDoVote>): MsgDoVote {
+    const message = { ...baseMsgDoVote } as MsgDoVote;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.keplr !== undefined && object.keplr !== null) {
+      message.keplr = object.keplr;
+    } else {
+      message.keplr = "";
+    }
+    if (object.storyId !== undefined && object.storyId !== null) {
+      message.storyId = object.storyId;
+    } else {
+      message.storyId = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgDoVoteResponse: object = {};
+
+export const MsgDoVoteResponse = {
+  encode(_: MsgDoVoteResponse, writer: Writer = Writer.create()): Writer {
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgDoVoteResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgDoVoteResponse } as MsgDoVoteResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgDoVoteResponse {
+    const message = { ...baseMsgDoVoteResponse } as MsgDoVoteResponse;
+    return message;
+  },
+
+  toJSON(_: MsgDoVoteResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(_: DeepPartial<MsgDoVoteResponse>): MsgDoVoteResponse {
+    const message = { ...baseMsgDoVoteResponse } as MsgDoVoteResponse;
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreateBook(request: MsgCreateBook): Promise<MsgCreateBookResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   CreateStory(request: MsgCreateStory): Promise<MsgCreateStoryResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  DoVote(request: MsgDoVote): Promise<MsgDoVoteResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -536,6 +672,16 @@ export class MsgClientImpl implements Msg {
     return promise.then((data) =>
       MsgCreateStoryResponse.decode(new Reader(data))
     );
+  }
+
+  DoVote(request: MsgDoVote): Promise<MsgDoVoteResponse> {
+    const data = MsgDoVote.encode(request).finish();
+    const promise = this.rpc.request(
+      "storyblock.storyblock.Msg",
+      "DoVote",
+      data
+    );
+    return promise.then((data) => MsgDoVoteResponse.decode(new Reader(data)));
   }
 }
 

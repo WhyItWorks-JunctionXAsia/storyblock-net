@@ -15,6 +15,7 @@ export interface Story {
   title: string;
   body: string;
   createdAt: string;
+  voteStatus: string;
 }
 
 const baseStory: object = {
@@ -28,6 +29,7 @@ const baseStory: object = {
   title: "",
   body: "",
   createdAt: "",
+  voteStatus: "",
 };
 
 export const Story = {
@@ -61,6 +63,9 @@ export const Story = {
     }
     if (message.createdAt !== "") {
       writer.uint32(82).string(message.createdAt);
+    }
+    if (message.voteStatus !== "") {
+      writer.uint32(90).string(message.voteStatus);
     }
     return writer;
   },
@@ -101,6 +106,9 @@ export const Story = {
           break;
         case 10:
           message.createdAt = reader.string();
+          break;
+        case 11:
+          message.voteStatus = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -162,6 +170,11 @@ export const Story = {
     } else {
       message.createdAt = "";
     }
+    if (object.voteStatus !== undefined && object.voteStatus !== null) {
+      message.voteStatus = String(object.voteStatus);
+    } else {
+      message.voteStatus = "";
+    }
     return message;
   },
 
@@ -178,6 +191,7 @@ export const Story = {
     message.title !== undefined && (obj.title = message.title);
     message.body !== undefined && (obj.body = message.body);
     message.createdAt !== undefined && (obj.createdAt = message.createdAt);
+    message.voteStatus !== undefined && (obj.voteStatus = message.voteStatus);
     return obj;
   },
 
@@ -232,6 +246,11 @@ export const Story = {
       message.createdAt = object.createdAt;
     } else {
       message.createdAt = "";
+    }
+    if (object.voteStatus !== undefined && object.voteStatus !== null) {
+      message.voteStatus = object.voteStatus;
+    } else {
+      message.voteStatus = "";
     }
     return message;
   },

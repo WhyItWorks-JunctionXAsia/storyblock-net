@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package storyblock.storyblock;
+
+option go_package = "storyblock/x/storyblock/types";
+
+message Vote{
+    string creator = 1;
+    uint64 id = 2;
+    string keplr =3;
+    string storyId = 4;
+    string createdHeight = 5;
+}

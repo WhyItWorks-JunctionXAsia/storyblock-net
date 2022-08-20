@@ -15,4 +15,5 @@ message Story{
     string title = 8;
     string body = 9;
     string createdAt = 10;
+    string voteStatus = 11;
 }

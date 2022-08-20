@@ -19,7 +19,9 @@ const (
 	BookKey      = "Book-value-"
 	BookCountKey = "Book-count-"
 
-	StoryKey = "Story-value-"
+	StoryKey      = "Story-value-"
+	VoteKey       = "Vote-value-"
+	VoteWinnerKey = "Vote-winner-"
 )
 
 func KeyPrefix(p string) []byte {

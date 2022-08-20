@@ -3,10 +3,11 @@ package storyblock
 import (
 	"fmt"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"storyblock/x/storyblock/keeper"
 	"storyblock/x/storyblock/types"
+
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 // NewHandler ...
@@ -22,6 +23,9 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 			return sdk.WrapServiceResult(ctx, res, err)
 		case *types.MsgCreateStory:
 			res, err := msgServer.CreateStory(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgDoVote:
+			res, err := msgServer.DoVote(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
 			// this line is used by starport scaffolding # 1
 		default:

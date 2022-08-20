@@ -9,6 +9,7 @@ option go_package = "storyblock/x/storyblock/types";
 service Msg {
       rpc CreateBook(MsgCreateBook) returns (MsgCreateBookResponse);
   rpc CreateStory(MsgCreateStory) returns (MsgCreateStoryResponse);
+  rpc DoVote(MsgDoVote) returns (MsgDoVoteResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -39,6 +40,15 @@ message MsgCreateStory {
 
 message MsgCreateStoryResponse {
   int32 retCode = 1;
+}
+
+message MsgDoVote {
+  string creator = 1;
+  string keplr = 2;
+  string storyId = 3;
+}
+
+message MsgDoVoteResponse {
 }
 
 // this line is used by starport scaffolding # proto/tx/message

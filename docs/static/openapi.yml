@@ -30298,6 +30298,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   /storyblock/storyblock/params:
@@ -30389,6 +30399,8 @@ paths:
                     body:
                       type: string
                     createdAt:
+                      type: string
+                    voteStatus:
                       type: string
               pagination:
                 type: object
@@ -30483,6 +30495,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -51900,6 +51922,8 @@ definitions:
       retCode:
         type: integer
         format: int32
+  storyblock.storyblock.MsgDoVoteResponse:
+    type: object
   storyblock.storyblock.Params:
     type: object
     description: Params defines the parameters for the module.
@@ -52005,6 +52029,8 @@ definitions:
               type: string
             createdAt:
               type: string
+            voteStatus:
+              type: string
       pagination:
         type: object
         properties:
@@ -52053,6 +52079,8 @@ definitions:
       body:
         type: string
       createdAt:
+        type: string
+      voteStatus:
         type: string
   tendermint.spn.monitoringp.ConnectionChannelID:
     type: object

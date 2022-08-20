@@ -33,6 +33,10 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgCreateStory int = 100
 
+	opWeightMsgDoVote = "op_weight_msg_do_vote"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDoVote int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -87,6 +91,17 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgCreateStory,
 		storyblocksimulation.SimulateMsgCreateStory(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDoVote int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDoVote, &weightMsgDoVote, nil,
+		func(_ *rand.Rand) {
+			weightMsgDoVote = defaultWeightMsgDoVote
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDoVote,
+		storyblocksimulation.SimulateMsgDoVote(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

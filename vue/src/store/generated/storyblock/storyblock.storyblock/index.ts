@@ -3,9 +3,10 @@ import { txClient, queryClient, MissingWalletError , registry} from './module'
 import { Book } from "./module/types/storyblock/book"
 import { Params } from "./module/types/storyblock/params"
 import { Story } from "./module/types/storyblock/story"
+import { Vote } from "./module/types/storyblock/vote"
 
 
-export { Book, Params, Story };
+export { Book, Params, Story, Vote };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -51,6 +52,7 @@ const getDefaultState = () => {
 						Book: getStructure(Book.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
 						Story: getStructure(Story.fromPartial({})),
+						Vote: getStructure(Vote.fromPartial({})),
 						
 		},
 		_Registry: registry,
@@ -220,6 +222,21 @@ export default {
 				}
 			}
 		},
+		async sendMsgDoVote({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgDoVote(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgDoVote:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgDoVote:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		async sendMsgCreateBook({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -246,6 +263,19 @@ export default {
 					throw new Error('TxClient:MsgCreateStory:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgCreateStory:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgDoVote({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgDoVote(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgDoVote:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgDoVote:Create Could not create message: ' + e.message)
 				}
 			}
 		},
