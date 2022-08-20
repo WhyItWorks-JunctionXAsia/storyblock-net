@@ -20,7 +20,10 @@ export interface RpcStatus {
   details?: ProtobufAny[];
 }
 
-export type StoryblockMsgCreateBookResponse = object;
+export interface StoryblockMsgCreateBookResponse {
+  /** @format uint64 */
+  id?: string;
+}
 
 /**
  * Params defines the parameters for the module.
@@ -227,7 +230,7 @@ export class HttpClient<SecurityDataType = unknown> {
 }
 
 /**
- * @title storyblock/genesis.proto
+ * @title storyblock/book.proto
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {

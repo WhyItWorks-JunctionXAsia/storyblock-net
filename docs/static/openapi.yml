@@ -51596,6 +51596,10 @@ definitions:
       the connection handshake.
   storyblock.storyblock.MsgCreateBookResponse:
     type: object
+    properties:
+      id:
+        type: string
+        format: uint64
   storyblock.storyblock.Params:
     type: object
     description: Params defines the parameters for the module.

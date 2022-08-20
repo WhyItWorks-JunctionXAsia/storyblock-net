@@ -1,9 +1,10 @@
 import { txClient, queryClient, MissingWalletError , registry} from './module'
 
+import { Book } from "./module/types/storyblock/book"
 import { Params } from "./module/types/storyblock/params"
 
 
-export { Params };
+export { Book, Params };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -44,6 +45,7 @@ const getDefaultState = () => {
 				Params: {},
 				
 				_Structure: {
+						Book: getStructure(Book.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
 						
 		},
