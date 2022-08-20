@@ -69,6 +69,36 @@ export interface StoryblockQueryParamsResponse {
   params?: StoryblockParams;
 }
 
+export interface StoryblockQueryStoriesResponse {
+  book?: StoryblockBook;
+  Story?: StoryblockStory[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
+export interface StoryblockStory {
+  creator?: string;
+
+  /** @format uint64 */
+  id?: string;
+  storyId?: string;
+  bookId?: string;
+  prevStoryId?: string;
+  height?: string;
+  title?: string;
+  body?: string;
+  createdAt?: string;
+}
+
 /**
 * message SomeRequest {
          Foo some_parameter = 1;
@@ -106,6 +136,13 @@ export interface V1Beta1PageRequest {
    * is set.
    */
   count_total?: boolean;
+
+  /**
+   * reverse is set to true if results are to be returned in the descending order.
+   *
+   * Since: cosmos-sdk 0.43
+   */
+  reverse?: boolean;
 }
 
 /**
@@ -335,6 +372,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -358,6 +396,33 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     this.request<StoryblockQueryParamsResponse, RpcStatus>({
       path: `/storyblock/storyblock/params`,
       method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryStories
+   * @summary Queries a list of Stories items.
+   * @request GET:/storyblock/storyblock/stories
+   */
+  queryStories = (
+    query?: {
+      bookId?: string;
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<StoryblockQueryStoriesResponse, RpcStatus>({
+      path: `/storyblock/storyblock/stories`,
+      method: "GET",
+      query: query,
       format: "json",
       ...params,
     });

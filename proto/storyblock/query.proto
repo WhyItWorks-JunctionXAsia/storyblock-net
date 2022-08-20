@@ -3,6 +3,7 @@ package storyblock.storyblock;
 
 import "gogoproto/gogo.proto";
 import "storyblock/book.proto";
+import "storyblock/story.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "storyblock/params.proto";
@@ -19,6 +20,11 @@ service Query {
   // Queries a list of Books items.
 	rpc Books(QueryBooksRequest) returns (QueryBooksResponse) {
 		option (google.api.http).get = "/storyblock/storyblock/books";
+	}
+
+// Queries a list of Stories items.
+	rpc Stories(QueryStoriesRequest) returns (QueryStoriesResponse) {
+		option (google.api.http).get = "/storyblock/storyblock/stories";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -40,6 +46,17 @@ message QueryBooksRequest {
 message QueryBooksResponse {
   repeated Book Book = 1;
   cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryStoriesRequest {
+  string bookId = 1;
+  cosmos.base.query.v1beta1.PageRequest pagination = 2;
+}
+
+message QueryStoriesResponse {
+  Book book = 1;
+  repeated Story Story = 2;
+  cosmos.base.query.v1beta1.PageResponse pagination = 3;
 }
 
 // this line is used by starport scaffolding # 3

@@ -45,6 +45,7 @@ const getDefaultState = () => {
 	return {
 				Params: {},
 				Books: {},
+				Stories: {},
 				
 				_Structure: {
 						Book: getStructure(Book.fromPartial({})),
@@ -89,6 +90,12 @@ export default {
 						(<any> params).query=null
 					}
 			return state.Books[JSON.stringify(params)] ?? {}
+		},
+				getStories: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.Stories[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -172,21 +179,32 @@ export default {
 		},
 		
 		
-		async sendMsgCreateStory({ rootGetters }, { value, fee = [], memo = '' }) {
+		
+		
+		 		
+		
+		
+		async QueryStories({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
 			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateStory(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateStory:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgCreateStory:Send Could not broadcast Tx: '+ e.message)
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryStories(query)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await queryClient.queryStories({...query, 'pagination.key':(<any> value).pagination.next_key})).data
+					value = mergeResults(value, next_values);
 				}
+				commit('QUERY', { query: 'Stories', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryStories', payload: { options: { all }, params: {...key},query }})
+				return getters['getStories']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryStories API Node Unavailable. Could not perform query: ' + e.message)
+				
 			}
 		},
+		
+		
 		async sendMsgCreateBook({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -202,20 +220,22 @@ export default {
 				}
 			}
 		},
-		
-		async MsgCreateStory({ rootGetters }, { value }) {
+		async sendMsgCreateStory({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
 				const msg = await txClient.msgCreateStory(value)
-				return msg
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
 					throw new Error('TxClient:MsgCreateStory:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgCreateStory:Create Could not create message: ' + e.message)
+				}else{
+					throw new Error('TxClient:MsgCreateStory:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
+		
 		async MsgCreateBook({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -226,6 +246,19 @@ export default {
 					throw new Error('TxClient:MsgCreateBook:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgCreateBook:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgCreateStory({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateStory(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateStory:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgCreateStory:Create Could not create message: ' + e.message)
 				}
 			}
 		},
