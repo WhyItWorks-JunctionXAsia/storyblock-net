@@ -2,6 +2,7 @@ syntax = "proto3";
 package storyblock.storyblock;
 
 import "gogoproto/gogo.proto";
+import "storyblock/book.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "storyblock/params.proto";
@@ -15,7 +16,12 @@ service Query {
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/storyblock/storyblock/params";
   }
-  // this line is used by starport scaffolding # 2
+  // Queries a list of Books items.
+	rpc Books(QueryBooksRequest) returns (QueryBooksResponse) {
+		option (google.api.http).get = "/storyblock/storyblock/books";
+	}
+
+// this line is used by starport scaffolding # 2
 }
 
 // QueryParamsRequest is request type for the Query/Params RPC method.
@@ -25,6 +31,15 @@ message QueryParamsRequest {}
 message QueryParamsResponse {
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryBooksRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryBooksResponse {
+  repeated Book Book = 1;
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3
