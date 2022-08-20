@@ -6,6 +6,7 @@ export const protobufPackage = "storyblock.storyblock";
 
 export interface MsgCreateBook {
   creator: string;
+  bookId: string;
   title: string;
   synopsis: string;
   createdAt: string;
@@ -17,6 +18,7 @@ export interface MsgCreateBookResponse {
 
 const baseMsgCreateBook: object = {
   creator: "",
+  bookId: "",
   title: "",
   synopsis: "",
   createdAt: "",
@@ -27,14 +29,17 @@ export const MsgCreateBook = {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
+    if (message.bookId !== "") {
+      writer.uint32(18).string(message.bookId);
+    }
     if (message.title !== "") {
-      writer.uint32(18).string(message.title);
+      writer.uint32(26).string(message.title);
     }
     if (message.synopsis !== "") {
-      writer.uint32(26).string(message.synopsis);
+      writer.uint32(34).string(message.synopsis);
     }
     if (message.createdAt !== "") {
-      writer.uint32(34).string(message.createdAt);
+      writer.uint32(42).string(message.createdAt);
     }
     return writer;
   },
@@ -50,12 +55,15 @@ export const MsgCreateBook = {
           message.creator = reader.string();
           break;
         case 2:
-          message.title = reader.string();
+          message.bookId = reader.string();
           break;
         case 3:
-          message.synopsis = reader.string();
+          message.title = reader.string();
           break;
         case 4:
+          message.synopsis = reader.string();
+          break;
+        case 5:
           message.createdAt = reader.string();
           break;
         default:
@@ -72,6 +80,11 @@ export const MsgCreateBook = {
       message.creator = String(object.creator);
     } else {
       message.creator = "";
+    }
+    if (object.bookId !== undefined && object.bookId !== null) {
+      message.bookId = String(object.bookId);
+    } else {
+      message.bookId = "";
     }
     if (object.title !== undefined && object.title !== null) {
       message.title = String(object.title);
@@ -94,6 +107,7 @@ export const MsgCreateBook = {
   toJSON(message: MsgCreateBook): unknown {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
+    message.bookId !== undefined && (obj.bookId = message.bookId);
     message.title !== undefined && (obj.title = message.title);
     message.synopsis !== undefined && (obj.synopsis = message.synopsis);
     message.createdAt !== undefined && (obj.createdAt = message.createdAt);
@@ -106,6 +120,11 @@ export const MsgCreateBook = {
       message.creator = object.creator;
     } else {
       message.creator = "";
+    }
+    if (object.bookId !== undefined && object.bookId !== null) {
+      message.bookId = object.bookId;
+    } else {
+      message.bookId = "";
     }
     if (object.title !== undefined && object.title !== null) {
       message.title = object.title;

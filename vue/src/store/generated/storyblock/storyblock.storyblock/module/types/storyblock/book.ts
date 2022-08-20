@@ -7,18 +7,18 @@ export const protobufPackage = "storyblock.storyblock";
 export interface Book {
   creator: string;
   id: number;
+  bookId: string;
   title: string;
   synopsis: string;
-  initId: number;
   createdAt: string;
 }
 
 const baseBook: object = {
   creator: "",
   id: 0,
+  bookId: "",
   title: "",
   synopsis: "",
-  initId: 0,
   createdAt: "",
 };
 
@@ -30,14 +30,14 @@ export const Book = {
     if (message.id !== 0) {
       writer.uint32(16).uint64(message.id);
     }
+    if (message.bookId !== "") {
+      writer.uint32(26).string(message.bookId);
+    }
     if (message.title !== "") {
-      writer.uint32(26).string(message.title);
+      writer.uint32(34).string(message.title);
     }
     if (message.synopsis !== "") {
-      writer.uint32(34).string(message.synopsis);
-    }
-    if (message.initId !== 0) {
-      writer.uint32(40).uint64(message.initId);
+      writer.uint32(42).string(message.synopsis);
     }
     if (message.createdAt !== "") {
       writer.uint32(50).string(message.createdAt);
@@ -59,13 +59,13 @@ export const Book = {
           message.id = longToNumber(reader.uint64() as Long);
           break;
         case 3:
-          message.title = reader.string();
+          message.bookId = reader.string();
           break;
         case 4:
-          message.synopsis = reader.string();
+          message.title = reader.string();
           break;
         case 5:
-          message.initId = longToNumber(reader.uint64() as Long);
+          message.synopsis = reader.string();
           break;
         case 6:
           message.createdAt = reader.string();
@@ -90,6 +90,11 @@ export const Book = {
     } else {
       message.id = 0;
     }
+    if (object.bookId !== undefined && object.bookId !== null) {
+      message.bookId = String(object.bookId);
+    } else {
+      message.bookId = "";
+    }
     if (object.title !== undefined && object.title !== null) {
       message.title = String(object.title);
     } else {
@@ -99,11 +104,6 @@ export const Book = {
       message.synopsis = String(object.synopsis);
     } else {
       message.synopsis = "";
-    }
-    if (object.initId !== undefined && object.initId !== null) {
-      message.initId = Number(object.initId);
-    } else {
-      message.initId = 0;
     }
     if (object.createdAt !== undefined && object.createdAt !== null) {
       message.createdAt = String(object.createdAt);
@@ -117,9 +117,9 @@ export const Book = {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.id !== undefined && (obj.id = message.id);
+    message.bookId !== undefined && (obj.bookId = message.bookId);
     message.title !== undefined && (obj.title = message.title);
     message.synopsis !== undefined && (obj.synopsis = message.synopsis);
-    message.initId !== undefined && (obj.initId = message.initId);
     message.createdAt !== undefined && (obj.createdAt = message.createdAt);
     return obj;
   },
@@ -136,6 +136,11 @@ export const Book = {
     } else {
       message.id = 0;
     }
+    if (object.bookId !== undefined && object.bookId !== null) {
+      message.bookId = object.bookId;
+    } else {
+      message.bookId = "";
+    }
     if (object.title !== undefined && object.title !== null) {
       message.title = object.title;
     } else {
@@ -145,11 +150,6 @@ export const Book = {
       message.synopsis = object.synopsis;
     } else {
       message.synopsis = "";
-    }
-    if (object.initId !== undefined && object.initId !== null) {
-      message.initId = object.initId;
-    } else {
-      message.initId = 0;
     }
     if (object.createdAt !== undefined && object.createdAt !== null) {
       message.createdAt = object.createdAt;

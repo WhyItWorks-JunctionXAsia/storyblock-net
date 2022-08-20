@@ -30196,13 +30196,12 @@ paths:
                     id:
                       type: string
                       format: uint64
+                    bookId:
+                      type: string
                     title:
                       type: string
                     synopsis:
                       type: string
-                    initId:
-                      type: string
-                      format: uint64
                     createdAt:
                       type: string
               pagination:
@@ -30294,6 +30293,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -51725,13 +51734,12 @@ definitions:
       id:
         type: string
         format: uint64
+      bookId:
+        type: string
       title:
         type: string
       synopsis:
         type: string
-      initId:
-        type: string
-        format: uint64
       createdAt:
         type: string
   storyblock.storyblock.MsgCreateBookResponse:
@@ -51756,13 +51764,12 @@ definitions:
             id:
               type: string
               format: uint64
+            bookId:
+              type: string
             title:
               type: string
             synopsis:
               type: string
-            initId:
-              type: string
-              format: uint64
             createdAt:
               type: string
       pagination:

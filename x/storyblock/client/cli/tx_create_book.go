@@ -14,13 +14,14 @@ var _ = strconv.Itoa(0)
 
 func CmdCreateBook() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "create-book [title] [synopsis] [created-at]",
+		Use:   "create-book [book-id] [title] [synopsis] [created-at]",
 		Short: "Broadcast message createBook",
-		Args:  cobra.ExactArgs(3),
+		Args:  cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
-			argTitle := args[0]
-			argSynopsis := args[1]
-			argCreatedAt := args[2]
+			argBookId := args[0]
+			argTitle := args[1]
+			argSynopsis := args[2]
+			argCreatedAt := args[3]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -29,6 +30,7 @@ func CmdCreateBook() *cobra.Command {
 
 			msg := types.NewMsgCreateBook(
 				clientCtx.GetFromAddress().String(),
+				argBookId,
 				argTitle,
 				argSynopsis,
 				argCreatedAt,

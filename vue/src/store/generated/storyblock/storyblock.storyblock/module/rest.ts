@@ -25,11 +25,9 @@ export interface StoryblockBook {
 
   /** @format uint64 */
   id?: string;
+  bookId?: string;
   title?: string;
   synopsis?: string;
-
-  /** @format uint64 */
-  initId?: string;
   createdAt?: string;
 }
 
