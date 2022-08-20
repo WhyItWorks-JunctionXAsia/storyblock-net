@@ -20,6 +20,8 @@ export interface RpcStatus {
   details?: ProtobufAny[];
 }
 
+export type StoryblockMsgCreateBookResponse = object;
+
 /**
  * Params defines the parameters for the module.
  */
