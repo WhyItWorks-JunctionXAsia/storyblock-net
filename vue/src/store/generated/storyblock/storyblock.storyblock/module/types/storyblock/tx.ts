@@ -16,6 +16,21 @@ export interface MsgCreateBookResponse {
   id: number;
 }
 
+export interface MsgCreateStory {
+  creator: string;
+  storyId: string;
+  bookId: string;
+  prevStoryId: string;
+  height: string;
+  title: string;
+  body: string;
+  createdAt: string;
+}
+
+export interface MsgCreateStoryResponse {
+  retCode: number;
+}
+
 const baseMsgCreateBook: object = {
   creator: "",
   bookId: "",
@@ -205,10 +220,255 @@ export const MsgCreateBookResponse = {
   },
 };
 
+const baseMsgCreateStory: object = {
+  creator: "",
+  storyId: "",
+  bookId: "",
+  prevStoryId: "",
+  height: "",
+  title: "",
+  body: "",
+  createdAt: "",
+};
+
+export const MsgCreateStory = {
+  encode(message: MsgCreateStory, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.storyId !== "") {
+      writer.uint32(18).string(message.storyId);
+    }
+    if (message.bookId !== "") {
+      writer.uint32(26).string(message.bookId);
+    }
+    if (message.prevStoryId !== "") {
+      writer.uint32(34).string(message.prevStoryId);
+    }
+    if (message.height !== "") {
+      writer.uint32(42).string(message.height);
+    }
+    if (message.title !== "") {
+      writer.uint32(50).string(message.title);
+    }
+    if (message.body !== "") {
+      writer.uint32(58).string(message.body);
+    }
+    if (message.createdAt !== "") {
+      writer.uint32(66).string(message.createdAt);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgCreateStory {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgCreateStory } as MsgCreateStory;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.storyId = reader.string();
+          break;
+        case 3:
+          message.bookId = reader.string();
+          break;
+        case 4:
+          message.prevStoryId = reader.string();
+          break;
+        case 5:
+          message.height = reader.string();
+          break;
+        case 6:
+          message.title = reader.string();
+          break;
+        case 7:
+          message.body = reader.string();
+          break;
+        case 8:
+          message.createdAt = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateStory {
+    const message = { ...baseMsgCreateStory } as MsgCreateStory;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.storyId !== undefined && object.storyId !== null) {
+      message.storyId = String(object.storyId);
+    } else {
+      message.storyId = "";
+    }
+    if (object.bookId !== undefined && object.bookId !== null) {
+      message.bookId = String(object.bookId);
+    } else {
+      message.bookId = "";
+    }
+    if (object.prevStoryId !== undefined && object.prevStoryId !== null) {
+      message.prevStoryId = String(object.prevStoryId);
+    } else {
+      message.prevStoryId = "";
+    }
+    if (object.height !== undefined && object.height !== null) {
+      message.height = String(object.height);
+    } else {
+      message.height = "";
+    }
+    if (object.title !== undefined && object.title !== null) {
+      message.title = String(object.title);
+    } else {
+      message.title = "";
+    }
+    if (object.body !== undefined && object.body !== null) {
+      message.body = String(object.body);
+    } else {
+      message.body = "";
+    }
+    if (object.createdAt !== undefined && object.createdAt !== null) {
+      message.createdAt = String(object.createdAt);
+    } else {
+      message.createdAt = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateStory): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.storyId !== undefined && (obj.storyId = message.storyId);
+    message.bookId !== undefined && (obj.bookId = message.bookId);
+    message.prevStoryId !== undefined &&
+      (obj.prevStoryId = message.prevStoryId);
+    message.height !== undefined && (obj.height = message.height);
+    message.title !== undefined && (obj.title = message.title);
+    message.body !== undefined && (obj.body = message.body);
+    message.createdAt !== undefined && (obj.createdAt = message.createdAt);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgCreateStory>): MsgCreateStory {
+    const message = { ...baseMsgCreateStory } as MsgCreateStory;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.storyId !== undefined && object.storyId !== null) {
+      message.storyId = object.storyId;
+    } else {
+      message.storyId = "";
+    }
+    if (object.bookId !== undefined && object.bookId !== null) {
+      message.bookId = object.bookId;
+    } else {
+      message.bookId = "";
+    }
+    if (object.prevStoryId !== undefined && object.prevStoryId !== null) {
+      message.prevStoryId = object.prevStoryId;
+    } else {
+      message.prevStoryId = "";
+    }
+    if (object.height !== undefined && object.height !== null) {
+      message.height = object.height;
+    } else {
+      message.height = "";
+    }
+    if (object.title !== undefined && object.title !== null) {
+      message.title = object.title;
+    } else {
+      message.title = "";
+    }
+    if (object.body !== undefined && object.body !== null) {
+      message.body = object.body;
+    } else {
+      message.body = "";
+    }
+    if (object.createdAt !== undefined && object.createdAt !== null) {
+      message.createdAt = object.createdAt;
+    } else {
+      message.createdAt = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgCreateStoryResponse: object = { retCode: 0 };
+
+export const MsgCreateStoryResponse = {
+  encode(
+    message: MsgCreateStoryResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.retCode !== 0) {
+      writer.uint32(8).int32(message.retCode);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgCreateStoryResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgCreateStoryResponse } as MsgCreateStoryResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.retCode = reader.int32();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateStoryResponse {
+    const message = { ...baseMsgCreateStoryResponse } as MsgCreateStoryResponse;
+    if (object.retCode !== undefined && object.retCode !== null) {
+      message.retCode = Number(object.retCode);
+    } else {
+      message.retCode = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateStoryResponse): unknown {
+    const obj: any = {};
+    message.retCode !== undefined && (obj.retCode = message.retCode);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateStoryResponse>
+  ): MsgCreateStoryResponse {
+    const message = { ...baseMsgCreateStoryResponse } as MsgCreateStoryResponse;
+    if (object.retCode !== undefined && object.retCode !== null) {
+      message.retCode = object.retCode;
+    } else {
+      message.retCode = 0;
+    }
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   CreateBook(request: MsgCreateBook): Promise<MsgCreateBookResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  CreateStory(request: MsgCreateStory): Promise<MsgCreateStoryResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -225,6 +485,18 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgCreateBookResponse.decode(new Reader(data))
+    );
+  }
+
+  CreateStory(request: MsgCreateStory): Promise<MsgCreateStoryResponse> {
+    const data = MsgCreateStory.encode(request).finish();
+    const promise = this.rpc.request(
+      "storyblock.storyblock.Msg",
+      "CreateStory",
+      data
+    );
+    return promise.then((data) =>
+      MsgCreateStoryResponse.decode(new Reader(data))
     );
   }
 }

@@ -54,8 +54,7 @@ func (k Keeper) AppendBook(ctx sdk.Context, book types.Book) uint64 {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.BookKey))
 
 	// Convert the post ID into bytes
-	byteKey := make([]byte, 8)
-	binary.BigEndian.PutUint64(byteKey, book.Id)
+	byteKey := []byte(book.BookId)
 
 	// Marshal the post into bytes
 	appendedValue := k.cdc.MustMarshal(&book)

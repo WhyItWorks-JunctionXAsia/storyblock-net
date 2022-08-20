@@ -2,9 +2,10 @@ import { txClient, queryClient, MissingWalletError , registry} from './module'
 
 import { Book } from "./module/types/storyblock/book"
 import { Params } from "./module/types/storyblock/params"
+import { Story } from "./module/types/storyblock/story"
 
 
-export { Book, Params };
+export { Book, Params, Story };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -48,6 +49,7 @@ const getDefaultState = () => {
 				_Structure: {
 						Book: getStructure(Book.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
+						Story: getStructure(Story.fromPartial({})),
 						
 		},
 		_Registry: registry,
@@ -170,6 +172,21 @@ export default {
 		},
 		
 		
+		async sendMsgCreateStory({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateStory(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateStory:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgCreateStory:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		async sendMsgCreateBook({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -186,6 +203,19 @@ export default {
 			}
 		},
 		
+		async MsgCreateStory({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateStory(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateStory:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgCreateStory:Create Could not create message: ' + e.message)
+				}
+			}
+		},
 		async MsgCreateBook({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)

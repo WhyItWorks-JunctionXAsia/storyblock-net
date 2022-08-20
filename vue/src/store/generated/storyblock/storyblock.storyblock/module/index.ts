@@ -4,10 +4,12 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
+import { MsgCreateStory } from "./types/storyblock/tx";
 import { MsgCreateBook } from "./types/storyblock/tx";
 
 
 const types = [
+  ["/storyblock.storyblock.MsgCreateStory", MsgCreateStory],
   ["/storyblock.storyblock.MsgCreateBook", MsgCreateBook],
   
 ];
@@ -41,6 +43,7 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
+    msgCreateStory: (data: MsgCreateStory): EncodeObject => ({ typeUrl: "/storyblock.storyblock.MsgCreateStory", value: MsgCreateStory.fromPartial( data ) }),
     msgCreateBook: (data: MsgCreateBook): EncodeObject => ({ typeUrl: "/storyblock.storyblock.MsgCreateBook", value: MsgCreateBook.fromPartial( data ) }),
     
   };

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package storyblock.storyblock;
+
+option go_package = "storyblock/x/storyblock/types";
+
+message Story{
+    string creator = 1;
+    uint64 id = 2;
+    string storyId = 3;
+    string bookId = 4;
+    string prevStoryId = 5;
+    string height = 6;
+    string title = 7;
+    string body = 8;
+    string createdAt = 9;
+}

@@ -36,6 +36,11 @@ export interface StoryblockMsgCreateBookResponse {
   id?: string;
 }
 
+export interface StoryblockMsgCreateStoryResponse {
+  /** @format int32 */
+  retCode?: number;
+}
+
 /**
  * Params defines the parameters for the module.
  */
