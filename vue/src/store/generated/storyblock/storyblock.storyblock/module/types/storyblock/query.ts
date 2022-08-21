@@ -7,6 +7,7 @@ import {
 } from "../cosmos/base/query/v1beta1/pagination";
 import { Book } from "../storyblock/book";
 import { Story } from "../storyblock/story";
+import { Vote } from "../storyblock/vote";
 
 export const protobufPackage = "storyblock.storyblock";
 
@@ -36,6 +37,17 @@ export interface QueryStoriesRequest {
 export interface QueryStoriesResponse {
   book: Book | undefined;
   Story: Story[];
+  pagination: PageResponse | undefined;
+}
+
+export interface QueryVotesRequest {
+  bookId: string;
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryVotesResponse {
+  book: Book | undefined;
+  Vote: Vote[];
   pagination: PageResponse | undefined;
 }
 
@@ -466,6 +478,187 @@ export const QueryStoriesResponse = {
   },
 };
 
+const baseQueryVotesRequest: object = { bookId: "" };
+
+export const QueryVotesRequest = {
+  encode(message: QueryVotesRequest, writer: Writer = Writer.create()): Writer {
+    if (message.bookId !== "") {
+      writer.uint32(10).string(message.bookId);
+    }
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryVotesRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryVotesRequest } as QueryVotesRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.bookId = reader.string();
+          break;
+        case 2:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryVotesRequest {
+    const message = { ...baseQueryVotesRequest } as QueryVotesRequest;
+    if (object.bookId !== undefined && object.bookId !== null) {
+      message.bookId = String(object.bookId);
+    } else {
+      message.bookId = "";
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryVotesRequest): unknown {
+    const obj: any = {};
+    message.bookId !== undefined && (obj.bookId = message.bookId);
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<QueryVotesRequest>): QueryVotesRequest {
+    const message = { ...baseQueryVotesRequest } as QueryVotesRequest;
+    if (object.bookId !== undefined && object.bookId !== null) {
+      message.bookId = object.bookId;
+    } else {
+      message.bookId = "";
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryVotesResponse: object = {};
+
+export const QueryVotesResponse = {
+  encode(
+    message: QueryVotesResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.book !== undefined) {
+      Book.encode(message.book, writer.uint32(10).fork()).ldelim();
+    }
+    for (const v of message.Vote) {
+      Vote.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(26).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryVotesResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryVotesResponse } as QueryVotesResponse;
+    message.Vote = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.book = Book.decode(reader, reader.uint32());
+          break;
+        case 2:
+          message.Vote.push(Vote.decode(reader, reader.uint32()));
+          break;
+        case 3:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryVotesResponse {
+    const message = { ...baseQueryVotesResponse } as QueryVotesResponse;
+    message.Vote = [];
+    if (object.book !== undefined && object.book !== null) {
+      message.book = Book.fromJSON(object.book);
+    } else {
+      message.book = undefined;
+    }
+    if (object.Vote !== undefined && object.Vote !== null) {
+      for (const e of object.Vote) {
+        message.Vote.push(Vote.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryVotesResponse): unknown {
+    const obj: any = {};
+    message.book !== undefined &&
+      (obj.book = message.book ? Book.toJSON(message.book) : undefined);
+    if (message.Vote) {
+      obj.Vote = message.Vote.map((e) => (e ? Vote.toJSON(e) : undefined));
+    } else {
+      obj.Vote = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<QueryVotesResponse>): QueryVotesResponse {
+    const message = { ...baseQueryVotesResponse } as QueryVotesResponse;
+    message.Vote = [];
+    if (object.book !== undefined && object.book !== null) {
+      message.book = Book.fromPartial(object.book);
+    } else {
+      message.book = undefined;
+    }
+    if (object.Vote !== undefined && object.Vote !== null) {
+      for (const e of object.Vote) {
+        message.Vote.push(Vote.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -474,6 +667,8 @@ export interface Query {
   Books(request: QueryBooksRequest): Promise<QueryBooksResponse>;
   /** Queries a list of Stories items. */
   Stories(request: QueryStoriesRequest): Promise<QueryStoriesResponse>;
+  /** Queries a list of Votes items. */
+  Votes(request: QueryVotesRequest): Promise<QueryVotesResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -511,6 +706,16 @@ export class QueryClientImpl implements Query {
     return promise.then((data) =>
       QueryStoriesResponse.decode(new Reader(data))
     );
+  }
+
+  Votes(request: QueryVotesRequest): Promise<QueryVotesResponse> {
+    const data = QueryVotesRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "storyblock.storyblock.Query",
+      "Votes",
+      data
+    );
+    return promise.then((data) => QueryVotesResponse.decode(new Reader(data)));
   }
 }
 

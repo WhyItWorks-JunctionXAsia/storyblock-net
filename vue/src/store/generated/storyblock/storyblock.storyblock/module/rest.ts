@@ -88,6 +88,22 @@ export interface StoryblockQueryStoriesResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface StoryblockQueryVotesResponse {
+  book?: StoryblockBook;
+  Vote?: StoryblockVote[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface StoryblockStory {
   creator?: string;
 
@@ -102,6 +118,16 @@ export interface StoryblockStory {
   body?: string;
   createdAt?: string;
   voteStatus?: string;
+}
+
+export interface StoryblockVote {
+  creator?: string;
+
+  /** @format uint64 */
+  id?: string;
+  keplr?: string;
+  storyId?: string;
+  createdHeight?: string;
 }
 
 /**
@@ -426,6 +452,33 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   ) =>
     this.request<StoryblockQueryStoriesResponse, RpcStatus>({
       path: `/storyblock/storyblock/stories`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryVotes
+   * @summary Queries a list of Votes items.
+   * @request GET:/storyblock/storyblock/votes
+   */
+  queryVotes = (
+    query?: {
+      bookId?: string;
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<StoryblockQueryVotesResponse, RpcStatus>({
+      path: `/storyblock/storyblock/votes`,
       method: "GET",
       query: query,
       format: "json",
